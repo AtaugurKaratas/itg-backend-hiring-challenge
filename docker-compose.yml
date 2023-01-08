@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: supply-chain-management
+    image: postgres
+    environment:
+      POSTGRES_USER: ataugurkaratas
+      POSTGRES_PASSWORD: my-secret-password
+      PGDATA: /data/postgres/supply-chain-management
+    volumes:
+      - db:/data/postgres/supply-chain-management
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
