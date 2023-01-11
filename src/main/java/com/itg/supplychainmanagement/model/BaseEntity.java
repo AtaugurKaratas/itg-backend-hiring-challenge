@@ -13,15 +13,6 @@ public abstract class BaseEntity {
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
     }
-
-    public BaseEntity(int id, String name, String password, String emailAddress, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.emailAddress = emailAddress;
-        this.phoneNumber = phoneNumber;
-    }
-
     public int getId() {
         return id;
     }
