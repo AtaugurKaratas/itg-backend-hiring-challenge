@@ -5,14 +5,24 @@ public class Product{
     private String name;
     private int quantity;
     private float price;
-    private ProductImage[] productImages;
+    private int discount;
+    private int retailerId;
 
-    public Product(int id, String name, int quantity, float price, ProductImage[] productImages) {
+    public Product() {
+    }
+
+    public Product(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Product(int id, String name, int quantity, float price, int discount, int retailerId) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
-        this.productImages = productImages;
+        this.discount = discount;
+        this.retailerId = retailerId;
     }
 
     public int getId() {
@@ -47,11 +57,19 @@ public class Product{
         this.price = price;
     }
 
-    public ProductImage[] getProductImages() {
-        return productImages;
+    public int getDiscount() {
+        return discount;
     }
 
-    public void setProductImages(ProductImage[] productImages) {
-        this.productImages = productImages;
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public int getRetailerId() {
+        return retailerId;
+    }
+
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
     }
 }
