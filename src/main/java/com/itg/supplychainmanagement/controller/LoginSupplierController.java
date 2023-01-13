@@ -35,6 +35,7 @@ public class LoginSupplierController extends HttpServlet {
         String supplierId = loginService.loginSupplier(email, password);
         if(supplierId != null) {
             session.setAttribute("supplierId", supplierId);
+            session.setAttribute("auth", "Auth");
             req.setAttribute("status", "success");
             req.getRequestDispatcher("/homePageSupplier.jsp").forward(req, resp);
         } else {

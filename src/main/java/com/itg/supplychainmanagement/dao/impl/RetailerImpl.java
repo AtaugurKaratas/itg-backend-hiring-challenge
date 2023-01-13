@@ -4,15 +4,13 @@ import com.itg.supplychainmanagement.dao.RetailerDao;
 import com.itg.supplychainmanagement.model.Retailer;
 import com.itg.supplychainmanagement.model.UserType;
 import com.itg.supplychainmanagement.util.DBUtil;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class RetailerImpl implements RetailerDao {
-    Logger logger = LoggerFactory.getLogger(RetailerImpl.class);
     @Override
     public int register(Retailer retailer) {
         int saveResult = 0;
@@ -26,7 +24,6 @@ public class RetailerImpl implements RetailerDao {
             preStatement.setString(4, retailer.getPhoneNumber());
             preStatement.setString(5, retailer.getUserRole());
             saveResult = preStatement.executeUpdate();
-            logger.error(String.valueOf(saveResult));
             DBUtil.close(connection, preStatement, null);
         } catch (Exception e) {
             e.printStackTrace();

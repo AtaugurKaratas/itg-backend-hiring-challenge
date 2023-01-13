@@ -36,10 +36,11 @@ public class LoginRetailerController extends HttpServlet {
         String retailerId = loginService.loginRegister(email, password);
         if(retailerId != null) {
             session.setAttribute("retailerId", retailerId);
-            req.setAttribute("status", "success");
+            session.setAttribute("auth", "Auth");
+            req.setAttribute("status", "Başarılı");
             req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         } else {
-            req.setAttribute("status", "failed");
+            req.setAttribute("status", "Giriş Işlemi Başarısız");
             req.getRequestDispatcher("/loginRetailer.jsp").forward(req, resp);
         }
     }

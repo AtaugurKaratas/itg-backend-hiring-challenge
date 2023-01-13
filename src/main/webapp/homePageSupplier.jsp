@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
+    String auth = (String) session.getAttribute("auth");
     if(session.getAttribute("supplierId") == null){
         response.sendRedirect("loginSupplier.jsp");
     }
@@ -14,7 +15,10 @@
 <html>
 <head>
     <title>HomePage Supplier</title>
+    <%@include file="includes/head.jsp" %>
 </head>
 <body>
+<%@include file="includes/navbar.jsp" %>
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

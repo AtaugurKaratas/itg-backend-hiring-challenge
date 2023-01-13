@@ -13,15 +13,15 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public String doRegisterRetailer(String name, String password, String email, String phoneNumber) {
         Retailer retailer = new Retailer(name, password, email, phoneNumber, UserType.RETAILER.name());
-        RetailerImpl baseEntity = new RetailerImpl();
-        baseEntity.register(retailer);
+        RetailerImpl retailer1 = new RetailerImpl();
+        retailer1.register(retailer);
         return "Kayit basari ile tamamlandı";
     }
     @Override
     public String doRegisterSupplier(String name, String password, String email, String phoneNumber) {
         Supplier supplier = new Supplier(name, password, email, phoneNumber, UserType.SUPPLIER.name());
-        SupplierImpl baseEntity = new SupplierImpl();
-        baseEntity.register(supplier);
+        SupplierImpl supplier1 = new SupplierImpl();
+        supplier1.register(supplier);
         return "Kayit basari ile tamamlandı";
     }
 }

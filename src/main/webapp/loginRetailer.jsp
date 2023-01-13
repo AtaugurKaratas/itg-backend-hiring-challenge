@@ -6,41 +6,54 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-    if(session.getAttribute("retailerId") != null){
+    String auth = (String) session.getAttribute("auth");
+    if (session.getAttribute("retailerId") != null) {
         response.sendRedirect("homePageRetailer.jsp");
     }
 %>
 <html>
 <head>
-    <title>Login Retailer</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>Satıcı Giriş</title>
+    <%@include file="includes/head.jsp" %>
 </head>
 <body>
-<form method="POST" action="retailer-login">
-    <div class="form-group">
-        <label for="exampleInputEmail">Email address</label>
-        <input name="email" type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+<%@include file="includes/navbar.jsp" %>
+<div class="container">
+    <div class="card w-50 mx-auto my-5">
+        <div class="card-header text-center">Satıcı Giriş Ekranı</div>
+        <div class="card-body">
+            <form action="retailer-login" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail">Email Adresi</label>
+                    <input name="email" type="email" class="form-control" id="exampleInputEmail"
+                           aria-describedby="emailHelp" placeholder="Email Adresinizi Giriniz" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword">Şifre</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword" placeholder="**************" required>
+                </div>
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Giriş</button>
+                    <p id="status"><%=request.getAttribute("status")%></p>
+                </div>
+                <div class="text-start">
+                    <a href="/supply-chain-management-1.0-SNAPSHOT/registerRetailer.jsp">Kayıt Ol</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input name="password" type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
-    <p id="status"><%=request.getAttribute("status")%></p>
-</form>
+</div>
+<%@include file="includes/footer.jsp" %>
 <script type="text/javascript">
     let status = document.getElementById("status").innerText;
-    if (status === "null"){
+    if (status === "null") {
         document.getElementById("status").hidden = true
     }
     document.getElementById("btn-submit").addEventListener("click", (event) => {
         status = document.getElementById("status").innerText;
-        if (status !== "null"){
+        if (status !== "null") {
             document.getElementById("status").hidden = false
         }
     });

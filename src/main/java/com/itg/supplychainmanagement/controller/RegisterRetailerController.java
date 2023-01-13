@@ -37,9 +37,11 @@ public class RegisterRetailerController extends HttpServlet {
             req.setAttribute("name", message);
             session.setAttribute("retailerName", name);
             session.setAttribute("retailerId", "karatas");
+            req.setAttribute("status", "Başarılı");
             req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         } else {
             String message = "Password not the same";
+            req.setAttribute("status", "Giriş Işlemi Başarısız");
             req.setAttribute("message", message);
         }
     }
