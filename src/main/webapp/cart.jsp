@@ -1,4 +1,5 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: ataugurkaratas
   Date: 13.01.2023
@@ -9,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
   String auth = (String) session.getAttribute("auth");
-  if(session.getAttribute("retailerId") == null){
+  if(session.getAttribute("retailerId") == null) {
     response.sendRedirect("loginRetailer.jsp");
   }
 %>
@@ -36,15 +37,16 @@
       </tr>
     </thead>
       <tbody>
+      <c:forEach items="${cartList}" var="cartList">
         <tr>
-          <td>Ürün Adı</td>
-          <td>45 TL</td>
+          <td>${cartList.name}</td>
+          <td>${cartList.price}TL</td>
           <td>
             <form action="" method="POST" class="form-inline">
               <input type="hidden" name="id" value="1" class="form-input">
               <div class="form-group d-flex justify-content-between">
                 <a class="btn btn-sm btn-warning" href="#"><i class="fas fa-solid fa-plus"></i></a>
-                <input type="text" name="quantity" class="form-control" value="1" readonly>
+                <input type="text" name="quantity" class="form-control" value="${cartList.quantity}" readonly>
                 <a class="btn btn-sm btn-warning" href="#"><i class="fas fa-solid fa-minus"></i></a>
               </div>
             </form>
@@ -53,8 +55,12 @@
             <a class="btn btn-small btn-danger" href="#">Kaldır</a>
           </td>
         </tr>
+      </c:forEach>
       </tbody>
   </table>
+  <form action="addToCart" method="POST" style="display: inline">
+    <button type="submit" class="btn btn-primary" id="btn-submit">Işlemi Onayla</button>
+  </form>
 </div>
 
 <%@include file="includes/footer.jsp" %>

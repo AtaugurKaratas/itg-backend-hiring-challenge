@@ -2,8 +2,10 @@ package com.itg.supplychainmanagement.model;
 
 public class Cart {
     private int id;
+    private String name;
     private int quantity;
     private double price;
+    private boolean isCheck;
     private int productId;
     private int billId;
     public Cart(int quantity, double price, int productId) {
@@ -26,6 +28,14 @@ public class Cart {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -40,6 +50,14 @@ public class Cart {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 
     public int getProductId() {

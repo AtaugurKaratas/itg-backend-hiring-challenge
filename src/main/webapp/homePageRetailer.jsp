@@ -26,9 +26,13 @@
         <input name="name" type="name" class="form-control" id="exampleInputName" placeholder="Urun Adınız Giriniz">
     </div>
     <div class="text-center mt-2">
-        <button type="submit" class="btn btn-primary" id="btn-submit">Ara</button>
+        <form action="search-product" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-primary" id="btn-submit">Ara</button>
+        </form>
+        <form action="out-of-stock" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-primary" id="btn-submit-stock">Stokta Bulunmayan Ürünler</button>
+        </form>
     </div>
-</form>
 <div class="container">
     <div class="card-header my-3">Ürünler</div>
     <div class="row">
@@ -41,7 +45,7 @@
                     <h6 class="price">${productList.price}</h6>
                     <h6 class="category">${productList.quantity}</h6>
                     <div class="mt-3 d-flex justify-content-between">
-                        <a class="btn btn-dark" href="#">Add to Cart</a>
+                        <a href="addToCart?id=${productList.id}&price=${productList.price}&name=${productList.name}" class="btn btn-dark">Add to Cart</a>
                         <a class="btn btn-primary" href="#">Buy Now</a>
                     </div>
                 </div>

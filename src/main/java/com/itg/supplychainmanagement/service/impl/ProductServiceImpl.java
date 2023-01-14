@@ -1,10 +1,11 @@
 package com.itg.supplychainmanagement.service.impl;
 
 import com.itg.supplychainmanagement.dao.impl.ProductImpl;
+import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.model.Product;
 import com.itg.supplychainmanagement.service.ProductService;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -24,4 +25,20 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> searchProduct(String name) {
         return product.searchProduct(name);
     }
+
+    @Override
+    public List<Cart> addToCart(List<Cart> cartList) {
+        List<Cart> carts = cartList;
+        for(Cart c: carts){
+            c.setPrice(c.getQuantity()*c.getPrice());
+        }
+        return carts;
+    }
+
+    @Override
+    public List<Product> outOfStockProduct() {
+        return product.outOfStockProduct();
+    }
+
+
 }

@@ -23,7 +23,7 @@
                  %>
                 <li class="nav-item active"><a class="nav-link" href="index.jsp">Login</a></li>
                 <% } else { %>
-                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Cart</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Cart <span class="btn-danger">${cartList.size()}</span></a></li>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/logout">Logout</a></li>
                 <% } %>
             </ul>

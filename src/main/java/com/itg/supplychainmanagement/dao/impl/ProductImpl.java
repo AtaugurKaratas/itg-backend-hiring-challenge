@@ -1,6 +1,7 @@
 package com.itg.supplychainmanagement.dao.impl;
 
 import com.itg.supplychainmanagement.dao.ProductDao;
+import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.model.Product;
 import com.itg.supplychainmanagement.model.UserType;
 import com.itg.supplychainmanagement.util.DBUtil;
@@ -76,4 +77,36 @@ public class ProductImpl implements ProductDao {
         }
         return productList;
     }
+
+    @Override
+    public List<Cart> addToCart(List<Cart> carts) {
+        List<Cart> cartList = carts;
+        return cartList;
+    }
+
+    @Override
+    public List<Product> outOfStockProduct() {
+        List<Product> productList = new ArrayList<>();
+        try{
+            Connection connection = DBUtil.connection();
+            PreparedStatement preStatement = connection.prepareStatement("Select * from product where quantity<1");
+            ResultSet rs = preStatement.executeQuery();
+            while (rs.next()){
+                Product product = new Product();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setPrice(rs.getFloat("price"));
+                product.setDiscount(rs.getInt("discount"));
+                product.setRetailerId(rs.getInt("retailerId"));
+                productList.add(product);
+            }
+            DBUtil.close(connection, preStatement, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+
 }
