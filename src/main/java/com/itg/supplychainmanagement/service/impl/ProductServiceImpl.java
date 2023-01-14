@@ -3,9 +3,9 @@ package com.itg.supplychainmanagement.service.impl;
 import com.itg.supplychainmanagement.dao.impl.ProductImpl;
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.model.Product;
+import com.itg.supplychainmanagement.model.ProductImage;
 import com.itg.supplychainmanagement.service.ProductService;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -38,6 +38,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> outOfStockProduct() {
         return product.outOfStockProduct();
+    }
+
+    @Override
+    public List<ProductImage> getProductImages(int productId) {
+        return product.getProductImages(productId);
     }
 
 

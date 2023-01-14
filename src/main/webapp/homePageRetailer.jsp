@@ -46,7 +46,7 @@
                     <h6 class="category">${productList.quantity}</h6>
                     <div class="mt-3 d-flex justify-content-between">
                         <a href="addToCart?id=${productList.id}&price=${productList.price}&name=${productList.name}" class="btn btn-dark">Add to Cart</a>
-                        <a class="btn btn-primary" href="#">Buy Now</a>
+                        <a class="btn btn-primary" href="detailProduct?id=${productList.id}">Ürün Detayları</a>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 package com.itg.supplychainmanagement.controller;
 
 import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
+import com.itg.supplychainmanagement.util.ImageProcess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -8,11 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.Collection;
-
 @MultipartConfig(fileSizeThreshold = 512*512*1,
 maxFileSize = 1024*1024*1,
 maxRequestSize = 1024*1024*2,
-location = "/home/ataugurkaratas/Desktop/productImages")
+location = "/home/ataugurkaratas/Desktop/supply-chain-management/src/main/webapp/productImage")
 @WebServlet(name = "add-product", value = "/add-product")
 public class AddProductController extends HttpServlet {
     @Override
@@ -31,25 +31,16 @@ public class AddProductController extends HttpServlet {
             ProductServiceImpl productService = new ProductServiceImpl();
             productId = productService.addProduct(productName, price, Integer.parseInt(retailerId));
             Collection<Part> parts = req.getParts();
+            ImageProcess imageProcess = new ImageProcess();
             for(Part filePart : parts){
-                String fileName = getFileName(filePart);
+                String fileName = imageProcess.getFileName(filePart);
                 if (fileName != null){
-                    productService.addProductImage("/home/ataugurkaratas/Desktop/productImages/"+fileName, productId);
+                    productService.addProductImage("productImage/"+fileName, productId);
                     filePart.write(fileName);
                 }
             }
             req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         }
-    }
-
-    private String getFileName(Part part){
-        String contentDisposition = part.getHeader("content-disposition");
-        if(!contentDisposition.contains("filename="))
-            return null;
-        int beginIndex = contentDisposition.indexOf("filename=") + 10;
-        int endIndex = contentDisposition.length() - 1;
-
-        return contentDisposition.substring(beginIndex, endIndex);
     }
 }
 

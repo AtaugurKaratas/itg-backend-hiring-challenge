@@ -3,7 +3,7 @@ package com.itg.supplychainmanagement.dao.impl;
 import com.itg.supplychainmanagement.dao.ProductDao;
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.model.Product;
-import com.itg.supplychainmanagement.model.UserType;
+import com.itg.supplychainmanagement.model.ProductImage;
 import com.itg.supplychainmanagement.util.DBUtil;
 
 import java.sql.Connection;
@@ -106,6 +106,28 @@ public class ProductImpl implements ProductDao {
             e.printStackTrace();
         }
         return productList;
+    }
+
+    @Override
+    public List<ProductImage> getProductImages(int productId) {
+        List<ProductImage> productImageList = new ArrayList<>();
+        try{
+            Connection connection = DBUtil.connection();
+            PreparedStatement preStatement = connection.prepareStatement("Select * from productimage where productid = ?");
+            preStatement.setInt(1, productId);
+            ResultSet rs = preStatement.executeQuery();
+            while (rs.next()){
+                ProductImage productImage = new ProductImage();
+                productImage.setId(rs.getInt("id"));
+                productImage.setPath(rs.getString("path"));
+                productImage.setProduct(rs.getInt("productid"));
+                productImageList.add(productImage);
+            }
+            DBUtil.close(connection, preStatement, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productImageList;
     }
 
 

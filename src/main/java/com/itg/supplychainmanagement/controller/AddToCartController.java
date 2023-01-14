@@ -1,9 +1,7 @@
 package com.itg.supplychainmanagement.controller;
 
 import com.itg.supplychainmanagement.model.Cart;
-import com.itg.supplychainmanagement.model.Product;
 import com.itg.supplychainmanagement.service.impl.BillServiceImpl;
-import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,5 +63,6 @@ public class AddToCartController extends HttpServlet {
         int retailerId = Integer.parseInt((String)session.getAttribute("retailerId"));
         BillServiceImpl billService = new BillServiceImpl();
         billService.addToBill(cartArrayList, retailerId);
+        session.setAttribute("cartList", null);
     }
 }

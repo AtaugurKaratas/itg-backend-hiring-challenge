@@ -2,6 +2,7 @@ package com.itg.supplychainmanagement.dao;
 
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.model.Product;
+import com.itg.supplychainmanagement.model.ProductImage;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface ProductDao {
     List<Cart> addToCart(List<Cart> cartList);
 
     List<Product> outOfStockProduct();
+
+
+    List<ProductImage> getProductImages(int productId);
 }

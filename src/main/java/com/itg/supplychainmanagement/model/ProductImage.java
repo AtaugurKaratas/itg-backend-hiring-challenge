@@ -4,12 +4,14 @@ public class ProductImage {
     private int id;
     private String path;
 
-    private int product;
+    private int productId;
 
-    public ProductImage(int id, String path, int product) {
+    public ProductImage(){}
+
+    public ProductImage(int id, String path, int productId) {
         this.id = id;
         this.path = path;
-        this.product = product;
+        this.productId = productId;
     }
 
     public int getId() {
@@ -29,10 +31,10 @@ public class ProductImage {
     }
 
     public int getProduct() {
-        return product;
+        return productId;
     }
 
-    public void setProduct(int product) {
-        this.product = product;
+    public void setProduct(int productId) {
+        this.productId = productId;
     }
 }
