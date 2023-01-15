@@ -7,7 +7,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%
   String auth = (String) session.getAttribute("auth");
   if(session.getAttribute("retailerId") == null) {
@@ -25,14 +24,13 @@
 <div class="container">
   <div class="d-flex py-3">
     <h3>Toplam Fiyat</h3>
-    <a class="mx-3 btn btn-primary" href="#">Sepeti Boşalt</a>
   </div>
   <table class="table table-light">
     <thead>
       <tr>
         <th scope="col">Ürün Adı</th>
         <th scope="col">Fiyatı</th>
-        <th scope="col">Satın Al</th>
+        <th scope="col">Adeti</th>
         <th scope="col">Iptal Et</th>
       </tr>
     </thead>
@@ -40,14 +38,13 @@
       <c:forEach items="${cartList}" var="cartList">
         <tr>
           <td>${cartList.name}</td>
-          <td>${cartList.price}TL</td>
+          <td id="price">${cartList.price} TL</td>
           <td>
             <form action="" method="POST" class="form-inline">
-              <input type="hidden" name="id" value="1" class="form-input">
               <div class="form-group d-flex justify-content-between">
-                <a class="btn btn-sm btn-warning" href="#"><i class="fas fa-solid fa-plus"></i></a>
-                <input type="text" name="quantity" class="form-control" value="${cartList.quantity}" readonly>
-                <a class="btn btn-sm btn-warning" href="#"><i class="fas fa-solid fa-minus"></i></a>
+                <a class="btn btn-sm btn-warning" href="#" id="plus"><i class="fas fa-solid fa-plus"></i></a>
+                <input type="text" name="quantity" class="form-control" id="quantity" value="${cartList.quantity}" readonly>
+                <a class="btn btn-sm btn-warning" href="#" id="minus"><i class="fas fa-solid fa-minus"></i></a>
               </div>
             </form>
           </td>
@@ -62,7 +59,24 @@
     <button type="submit" class="btn btn-primary" id="btn-submit">Işlemi Onayla</button>
   </form>
 </div>
-
+<script>
+  let plus = document.getElementById("plus");
+  let minus = document.getElementById("minus");
+  let count = parseInt(document.getElementById("quantity").value);
+  let price = document.getElementById("price").innerText;
+  let productPrice = price.split(" ")[0] / count;
+  console.log(productPrice);
+  plus.onclick = () => {
+     document.getElementById("quantity").value = ++count;
+     document.getElementById("price").innerText = (productPrice*count) + " TL"
+  }
+  minus.onclick = () => {
+    if(count>1){
+      document.getElementById("quantity").value = --count;
+      document.getElementById("price").innerText = (productPrice*count) + " TL"
+    }
+  }
+</script>
 <%@include file="includes/footer.jsp" %>
 </body>
 </html>

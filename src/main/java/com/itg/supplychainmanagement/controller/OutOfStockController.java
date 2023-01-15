@@ -12,20 +12,13 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "search-product", value = "/search-product")
-public class SearchProductController extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
-    }
-
+@WebServlet(name = "out-of-stock", value = "/out-of-stock")
+public class OutOfStockController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
         ProductServiceImpl productService = new ProductServiceImpl();
-        List<ProductDTO> productList = productService.searchProduct(name);
+        List<ProductDTO> productList = productService.outOfStockProduct();
         req.setAttribute("productList", productList);
         req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
-
     }
 }

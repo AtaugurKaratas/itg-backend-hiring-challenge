@@ -22,8 +22,15 @@
                     if (auth == null) {
                  %>
                 <li class="nav-item active"><a class="nav-link" href="index.jsp">Login</a></li>
-                <% } else { %>
+                <% } if (true ){ %>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/homePageRetailer.jsp">Urun Arama</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/addProduct.jsp">Urun Ekle</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Sepet <span class="btn-danger">${cartList.size()}</span></a></li>
+                <% } %>
+                <% if (true ){ %>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Cart <span class="btn-danger">${cartList.size()}</span></a></li>
+                <% } %>
+                <% if (auth != null) { %>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/logout">Logout</a></li>
                 <% } %>
             </ul>

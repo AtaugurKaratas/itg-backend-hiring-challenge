@@ -27,18 +27,23 @@ public class AddProductController extends HttpServlet {
         HttpSession session = req.getSession(false);
         String retailerId = (String)session.getAttribute("retailerId");
         int productId = 0;
+        boolean count = true;
         if (productName != null && price != 0) {
             ProductServiceImpl productService = new ProductServiceImpl();
             productId = productService.addProduct(productName, price, Integer.parseInt(retailerId));
             Collection<Part> parts = req.getParts();
+            System.out.print(parts);
             ImageProcess imageProcess = new ImageProcess();
             for(Part filePart : parts){
                 String fileName = imageProcess.getFileName(filePart);
                 if (fileName != null){
+                    count = false;
                     productService.addProductImage("productImage/"+fileName, productId);
                     filePart.write(fileName);
                 }
             }
+            if(count)
+                productService.addProductImage("productImage/default.jpg", productId);
             req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         }
     }

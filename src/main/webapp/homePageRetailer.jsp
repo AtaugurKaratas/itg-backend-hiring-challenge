@@ -39,14 +39,14 @@
     <c:forEach items="${productList}" var="productList">
         <div class="col-md-3 my-3">
             <div class="card w-100" style="width: 18rem;">
-                <img class="card-img-top" src="productImage/download.png" alt="#">
+                <img class="card-img-top" src="${productList.path}" alt="#" style="width: 150px; height: 150px">
                 <div class="card-body">
                     <h5 class="card-title">${productList.name}</h5>
                     <h6 class="price">${productList.price}</h6>
                     <h6 class="category">${productList.quantity}</h6>
                     <div class="mt-3 d-flex justify-content-between">
-                        <a href="addToCart?id=${productList.id}&price=${productList.price}&name=${productList.name}" class="btn btn-dark">Add to Cart</a>
-                        <a class="btn btn-primary" href="detailProduct?id=${productList.id}">Ürün Detayları</a>
+                        <a href="addToCart?id=${productList.productId}&price=${productList.price}&name=${productList.name}" class="btn btn-dark">Add to Cart</a>
+                        <a class="btn btn-primary" href="detailProduct?id=${productList.productId}&price=${productList.price}&name=${productList.name}">Ürün Detayları</a>
                     </div>
                 </div>
             </div>

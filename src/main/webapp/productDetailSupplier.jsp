@@ -1,12 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ataugurkaratas
-  Date: 14.01.2023
-  Time: 03:13
+  Date: 15.01.2023
+  Time: 15:55
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String auth = (String) session.getAttribute("auth");
     /*
@@ -17,6 +17,8 @@
     int productId = (Integer) session.getAttribute("productId");
     double productPrice = (Double) session.getAttribute("productPrice");
     String productName = String.valueOf(session.getAttribute("productName"));
+    int productQuantity = (Integer) session.getAttribute("productQuantity");
+    int productDiscount = (Integer) session.getAttribute("productDiscount");
 %>
 <c:set var="count" value="${0}"/>
 <html>
@@ -63,8 +65,21 @@
         </button>
     </div>
     <div class="text-center mt-2">
-        <h6 class="card-title">Fiyat: ${productPrice} TL</h6>
-        <a href="addToCart?id=${productId}&price=${productPrice}&name=${productName}" class="btn btn-primary" id="btn-submit">Sepete Ekle</a>
+        <form action="update-product" method="POST">
+            <h6 class="card-title">Fiyat: ${productPrice} TL</h6>
+            <div class="form-group">
+                <label for="exampleInputQuantity">Ürün Adedi</label>
+                <input name="quantity" type="text" class="form-control" id="exampleInputQuantity"
+                       value="${productQuantity}">
+                <input name="id" type="hidden" class="form-control" value="${productId}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputDiscount">Indirim Orani</label>
+                <input name="discount" type="text" class="form-control" id="exampleInputDiscount"
+                       value="${productDiscount}">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-submit">Güncelle</button>
+        </form>
     </div>
 </div>
 <%@include file="includes/footer.jsp" %>

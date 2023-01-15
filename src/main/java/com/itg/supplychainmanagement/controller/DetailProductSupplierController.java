@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "detailProduct", value = "/detailProduct")
-public class DetailProductController extends HttpServlet {
+@WebServlet(name = "detail-product-supplier", value = "/detail-product-supplier")
+public class DetailProductSupplierController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF8");
@@ -21,6 +21,8 @@ public class DetailProductController extends HttpServlet {
         int productId = Integer.parseInt(req.getParameter("id"));
         double price = Double.parseDouble(req.getParameter("price"));
         String name = req.getParameter("name");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+        int discount = Integer.parseInt(req.getParameter("discount"));
         ProductServiceImpl productService = new ProductServiceImpl();
         imageList = (ArrayList<ProductImage>) productService.getProductImages(productId);
         req.setAttribute("imageList", imageList);
@@ -30,7 +32,9 @@ public class DetailProductController extends HttpServlet {
         session.setAttribute("productId", productId);
         session.setAttribute("productPrice", price);
         session.setAttribute("productName", name);
+        session.setAttribute("productQuantity", quantity);
+        session.setAttribute("productDiscount", discount);
 
-        req.getRequestDispatcher("/productDetail.jsp").forward(req, resp);
+        req.getRequestDispatcher("/productDetailSupplier.jsp").forward(req, resp);
     }
 }

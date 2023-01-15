@@ -8,6 +8,9 @@ public class Cart {
     private boolean isCheck;
     private int productId;
     private int billId;
+
+    public Cart() {
+    }
     public Cart(int quantity, double price, int productId) {
         this.quantity = quantity;
         this.price = price;
