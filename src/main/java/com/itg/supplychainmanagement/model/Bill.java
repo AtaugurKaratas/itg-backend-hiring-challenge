@@ -11,10 +11,11 @@ public class Bill {
     private Date creationDate;
     private Date approvalDate;
 
+    public Bill(){}
+
     public Bill(double totalPrice, int retailerId) {
         this.totalPrice = totalPrice;
         this.retailerId = retailerId;
-        this.isCheck = false;
         this.creationDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
     }
 
