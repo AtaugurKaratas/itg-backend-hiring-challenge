@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 public class LoginSupplierController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/loginSupplier.jsp").forward(req, resp);
+        req.getRequestDispatcher("/billDetail").forward(req, resp);
     }
 
     @Override

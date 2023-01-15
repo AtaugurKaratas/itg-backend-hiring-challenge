@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String auth = (String) session.getAttribute("auth");
+    String retailerId = (String) session.getAttribute("retailerId");
+    String supplierId = (String) session.getAttribute("supplierId");
     if (session.getAttribute("supplierId") == null) {
         response.sendRedirect("loginSupplier.jsp");
     }

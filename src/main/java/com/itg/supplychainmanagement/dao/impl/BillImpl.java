@@ -58,7 +58,7 @@ public class BillImpl implements BillDao {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection
                     .prepareStatement("Select bill.id, bill.totalprice, bill.creationdate, bill.ischeck, users.name, bill.approvaldate from bill" +
-                            " inner join users on bill.retailerId = users.id where bill.ischeck is null");
+                            " inner join users on bill.retailerId = users.id where bill.ischeck is false");
             ResultSet rs = preStatement.executeQuery();
             while (rs.next()) {
                 BillDTO billDTO = new BillDTO();

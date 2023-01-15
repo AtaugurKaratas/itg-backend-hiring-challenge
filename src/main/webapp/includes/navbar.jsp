@@ -21,14 +21,17 @@
                 <%
                     if (auth == null) {
                  %>
-                <li class="nav-item active"><a class="nav-link" href="index.jsp">Login</a></li>
-                <% } if (true ){ %>
+                <li class="nav-item active"><a class="nav-link" href="retailer-login">Satici Giris</a></li>
+                <li class="nav-item active"><a class="nav-link" href="supplier-login">Tedarikci Giris</a></li>
+                <% } if (retailerId != null){ %>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/homePageRetailer.jsp">Urun Arama</a></li>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/addProduct.jsp">Urun Ekle</a></li>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Sepet <span class="btn-danger">${cartList.size()}</span></a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/bill-retailer">Bekleyen Islemler</a></li>
                 <% } %>
-                <% if (true ){ %>
-                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Cart <span class="btn-danger">${cartList.size()}</span></a></li>
+                <% if (supplierId != null){ %>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/billDetail">Bekleyen Siparisler</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/allProductSupplier.jsp">Urunler</a></li>
                 <% } %>
                 <% if (auth != null) { %>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/logout">Logout</a></li>

@@ -9,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   String auth = (String) session.getAttribute("auth");
+  String retailerId = (String) session.getAttribute("retailerId");
+  String supplierId = (String) session.getAttribute("supplierId");
   if(session.getAttribute("retailerId") == null) {
     response.sendRedirect("loginRetailer.jsp");
   }
