@@ -1,5 +1,9 @@
 package com.itg.supplychainmanagement.dto;
 
+import com.itg.supplychainmanagement.model.ProductImage;
+
+import java.util.List;
+
 public class ProductDTO {
     private int productId;
     private String name;
@@ -7,7 +11,8 @@ public class ProductDTO {
     private float price;
     private int discount;
     private int retailerId;
-    private String path;
+    private List<ProductImage> productImageList;
+    private String categoryname;
     public ProductDTO(){}
 
     public int getProductId() {
@@ -58,11 +63,19 @@ public class ProductDTO {
         this.retailerId = retailerId;
     }
 
-    public String getPath() {
-        return path;
+    public List<ProductImage> getProductImageList() {
+        return productImageList;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setProductImageList(List<ProductImage> productImageList) {
+        this.productImageList = productImageList;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
 }

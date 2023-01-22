@@ -2,25 +2,24 @@ package com.itg.supplychainmanagement.model;
 
 public class Cart {
     private int id;
-    private String name;
     private int quantity;
     private double price;
     private boolean isCheck;
-    private int productId;
-    private int billId;
+    private Product product;
+    private Bill bill;
 
     public Cart() {
     }
-    public Cart(int quantity, double price, int productId) {
+    public Cart(int quantity, double price, Product product) {
         this.quantity = quantity;
         this.price = price;
-        this.productId = productId;
+        this.product = product;
     }
-    public Cart(int quantity, double price, int productId, int billId) {
+    public Cart(int quantity, double price, Product product, Bill bill) {
         this.quantity = quantity;
         this.price = price;
-        this.productId = productId;
-        this.billId = billId;
+        this.product = product;
+        this.bill = bill;
     }
 
     public int getId() {
@@ -29,14 +28,6 @@ public class Cart {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getQuantity() {
@@ -63,19 +54,19 @@ public class Cart {
         isCheck = check;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public int getBillId() {
-        return billId;
+    public Bill getBill() {
+        return bill;
     }
 
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 }

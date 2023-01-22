@@ -1,6 +1,9 @@
 package com.itg.supplychainmanagement.dto;
 
+import com.itg.supplychainmanagement.model.Bill;
+
 import java.sql.Date;
+import java.sql.Time;
 
 public class BillDTO {
     private int id;
@@ -9,6 +12,10 @@ public class BillDTO {
     private boolean isCheck;
     private String retailerName;
     private Date approvalDate;
+    private Time creationTime;
+    private Time approvalTime;
+
+    private int retailerId;
 
     public BillDTO(){}
 
@@ -58,5 +65,29 @@ public class BillDTO {
 
     public void setApprovalDate(Date approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public Time getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Time creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Time getApprovalTime() {
+        return approvalTime;
+    }
+
+    public void setApprovalTime(Time approvalTime) {
+        this.approvalTime = approvalTime;
+    }
+
+    public int getRetailerId() {
+        return retailerId;
+    }
+
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
     }
 }

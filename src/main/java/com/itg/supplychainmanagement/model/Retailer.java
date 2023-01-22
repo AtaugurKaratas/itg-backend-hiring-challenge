@@ -1,8 +1,11 @@
 package com.itg.supplychainmanagement.model;
 
-public class Retailer extends BaseEntity{
+public class Retailer extends BaseEntity {
 
     private String userRole;
+
+    public Retailer() {
+    }
 
     public Retailer(String name, String password, String emailAddress, String phoneNumber, String userRole) {
         super(name, password, emailAddress, phoneNumber);
