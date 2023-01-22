@@ -17,7 +17,6 @@ public class BillController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BillServiceImpl billService = new BillServiceImpl();
         ArrayList<BillDTO> billDTOList = billService.getAllBills();
-        System.out.println(billDTOList);
         req.setAttribute("billList", billDTOList);
         req.getRequestDispatcher("/homePageSupplier.jsp").forward(req, resp);
     }

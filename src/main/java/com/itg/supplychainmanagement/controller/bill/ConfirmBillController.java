@@ -13,7 +13,6 @@ public class ConfirmBillController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Selamlar");
         resp.setContentType("text/html; charset=UTF8");
         int billId = Integer.parseInt(req.getParameter("id"));
         BillServiceImpl billService = new BillServiceImpl();

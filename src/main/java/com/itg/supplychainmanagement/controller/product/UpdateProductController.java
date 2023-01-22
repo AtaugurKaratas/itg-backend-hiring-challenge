@@ -16,9 +16,9 @@ public class UpdateProductController extends HttpServlet {
     int discount;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productId = Integer.parseInt((String)req.getParameter("id"));
-        quantity = Integer.parseInt((String)req.getParameter("quantity"));
-        discount = Integer.parseInt((String)req.getParameter("discount"));
+        productId = Integer.parseInt(req.getParameter("id"));
+        quantity = Integer.parseInt(req.getParameter("quantity"));
+        discount = Integer.parseInt(req.getParameter("discount"));
         ProductServiceImpl productService = new ProductServiceImpl();
         System.out.println(productId + quantity + discount);
         productService.updateProduct(productId, quantity, discount);
@@ -27,9 +27,9 @@ public class UpdateProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productId = Integer.parseInt((String)req.getParameter("id"));
-        quantity = Integer.parseInt((String)req.getParameter("quantity"));
-        discount = Integer.parseInt((String)req.getParameter("discount"));
+        productId = Integer.parseInt(req.getParameter("id"));
+        quantity = Integer.parseInt(req.getParameter("quantity"));
+        discount = Integer.parseInt(req.getParameter("discount"));
         ProductServiceImpl productService = new ProductServiceImpl();
         System.out.println(productId + quantity + discount);
         productService.updateProduct(productId, quantity, discount);

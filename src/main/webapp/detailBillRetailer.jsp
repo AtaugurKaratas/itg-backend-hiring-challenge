@@ -14,7 +14,6 @@
     if(session.getAttribute("retailerId") == null){
         response.sendRedirect("loginRetailer.jsp");
     }
-    int billId = (int) session.getAttribute("billId");
 %>
 <html>
 <head>
@@ -26,7 +25,7 @@
 
 <div class="container">
     <div class="d-flex py-3">
-        <h3>${billId} Numaralı Tedarik Işlemi</h3>
+        <h3>${billDTO.id} Numaralı Tedarik Işlemi</h3>
     </div>
     <table class="table table-light">
         <thead>
@@ -46,8 +45,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <h2>Toplam Fiyat: ${billDTO.totalPrice} TL</h2>
     <form action="delete-bill" method="POST" style="display: inline">
-        <a href="delete-bill?id=${billId}" class="btn btn-danger">Işlemi Iptal Et</a>
+        ${billDTO.check == false ? '<a href="delete-bill?id=${billId}" class="btn btn-danger">Işlemi Iptal Et</a>' : ""}
     </form>
 </div>
 <script>

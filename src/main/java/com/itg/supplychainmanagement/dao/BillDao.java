@@ -20,4 +20,6 @@ public interface BillDao {
     ArrayList<BillDTO> getAllBillRetailer(int retailerId);
 
     void deleteBillById(int billId);
+
+    BillDTO getBillById(int billId);
 }

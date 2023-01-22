@@ -52,7 +52,7 @@
                 <td>
                     <form action="delete-bill" method="POST" style="display: inline">
                         <a href="delete-bill?id=${billListRetailer.id}"
-                           type="submit" ${billListRetailer.check == true ? 'class="btn btn-success" disabled' : 'class="btn btn-danger"'}
+                           type="submit" ${billListRetailer.check == true ? 'class="btn btn-success" style="pointer-events: none"' : 'class="btn btn-danger"'}
                            id="btn-check">${billListRetailer.check == true ? "BAŞARILI" : "IPTAL"}</a>
                     </form>
                 </td>

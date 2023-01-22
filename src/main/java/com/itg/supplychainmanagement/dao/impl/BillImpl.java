@@ -171,4 +171,27 @@ public class BillImpl implements BillDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public BillDTO getBillById(int billId) {
+        BillDTO bill = new BillDTO();
+        try {
+            Connection connection = DBUtil.connection();
+            PreparedStatement preStatement = connection.prepareStatement("Select * from bill where id = ?");
+            preStatement.setInt(1, billId);
+            ResultSet rs = preStatement.executeQuery();
+            while (rs.next()) {
+                bill.setId(rs.getInt("id"));
+                bill.setTotalPrice(rs.getDouble("totalprice"));
+                bill.setCreationDate(rs.getDate("creationdate"));
+                bill.setCheck(rs.getBoolean("ischeck"));
+                bill.setRetailerId(rs.getInt("retailerid"));
+                bill.setApprovalDate(rs.getDate("approvaldate"));
+            }
+            DBUtil.close(connection, preStatement, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bill;
+    }
 }

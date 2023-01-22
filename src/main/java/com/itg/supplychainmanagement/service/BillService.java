@@ -19,4 +19,6 @@ public interface BillService {
     ArrayList<BillDTO> getAllBillRetailer(int retailerId);
 
     void deleteBillById(int billId);
+
+    BillDTO getBillById(int billId);
 }

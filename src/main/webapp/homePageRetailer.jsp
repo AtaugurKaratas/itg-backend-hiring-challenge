@@ -48,9 +48,9 @@
                     </c:forEach>
                     <div class="card-body">
                         <h5 class="card-title">${productList.name}</h5>
-                        <h6 class="price">${productList.price}</h6>
-                        <h6 class="category">${productList.quantity}</h6>
-                        <h6 class="category">${productList.categoryname}</h6>
+                        <h6>${productList.price}</h6>
+                        <h6>${productList.quantity}</h6>
+                        <h6>${productList.categoryname}</h6>
                         <div class="mt-3 d-flex justify-content-between">
                             <a href="addToCart?id=${productList.productId}" class="btn btn-dark">Add to Cart</a>
                             <a class="btn btn-primary"

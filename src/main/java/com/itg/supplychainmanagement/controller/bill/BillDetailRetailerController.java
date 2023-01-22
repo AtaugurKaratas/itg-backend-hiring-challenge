@@ -1,6 +1,8 @@
 package com.itg.supplychainmanagement.controller.bill;
 
+import com.itg.supplychainmanagement.dto.BillDTO;
 import com.itg.supplychainmanagement.dto.CartDTO;
+import com.itg.supplychainmanagement.model.Bill;
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.service.impl.BillServiceImpl;
 
@@ -24,7 +26,9 @@ public class BillDetailRetailerController extends HttpServlet {
         session.setAttribute("billId", billId);
         BillServiceImpl billService = new BillServiceImpl();
         cartList = billService.getAllCartById(billId);
+        BillDTO billDTO = billService.getBillById(billId);
         req.setAttribute("cartListById", cartList);
+        req.setAttribute("billDTO", billDTO);
         req.getRequestDispatcher("/detailBillRetailer.jsp").forward(req, resp);
     }
 

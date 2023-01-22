@@ -46,4 +46,10 @@ public class BillServiceImpl implements BillService {
         BillImpl bill = new BillImpl();
         bill.deleteBillById(billId);
     }
+
+    @Override
+    public BillDTO getBillById(int billId) {
+        BillImpl bill = new BillImpl();
+        return bill.getBillById(billId);
+    }
 }
