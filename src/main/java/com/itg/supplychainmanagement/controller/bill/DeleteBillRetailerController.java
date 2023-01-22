@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.bill;
 
 import com.itg.supplychainmanagement.service.impl.BillServiceImpl;
 

@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.user;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

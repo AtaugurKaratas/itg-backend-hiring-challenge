@@ -4,11 +4,9 @@ import com.itg.supplychainmanagement.dao.SupplierDao;
 import com.itg.supplychainmanagement.model.Supplier;
 import com.itg.supplychainmanagement.model.UserType;
 import com.itg.supplychainmanagement.util.DBUtil;
-import java.util.logging.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.logging.Logger;
 
 public class SupplierImpl implements SupplierDao {
 
@@ -18,13 +16,15 @@ public class SupplierImpl implements SupplierDao {
         int saveResult = 0;
         try{
             Connection connection = DBUtil.connection();
-            String saveUser = "Insert into users (name, password, emailaddress, phonenumber, role) values (?, ?, ?, ?, ?)";
+            String saveUser = "Insert into users (name, password, emailaddress, phonenumber, role, creationdate, creationtime) values (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preStatement = connection.prepareStatement(saveUser);
             preStatement.setString(1, supplier.getName());
             preStatement.setString(2, supplier.getPassword());
             preStatement.setString(3, supplier.getEmailAddress());
             preStatement.setString(4, supplier.getPhoneNumber());
             preStatement.setString(5, supplier.getUserRole());
+            preStatement.setDate(6, (Date) supplier.getCreationDate());
+            preStatement.setTime(7, supplier.getCreationTime());
             saveResult = preStatement.executeUpdate();
             DBUtil.close(connection, preStatement, null);
         } catch (Exception e) {

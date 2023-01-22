@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.user;
 
 import com.itg.supplychainmanagement.service.impl.RegisterServiceImpl;
 import com.itg.supplychainmanagement.util.PasswordHashing;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-@WebServlet(name = "supplier-register", value = "/supplier-register")
-public class RegisterSupplierController extends HttpServlet {
+@WebServlet(name = "retailer-register", value = "/retailer-register")
+public class RegisterRetailerController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,26 +24,28 @@ public class RegisterSupplierController extends HttpServlet {
         String phoneNumber = req.getParameter("phoneNumber");
         HttpSession session = req.getSession();
 
-        try {
-            password = PasswordHashing.toHexString(PasswordHashing.getSHA(password));
-            passwordRepeat = PasswordHashing.toHexString(PasswordHashing.getSHA(passwordRepeat));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
         if (password.equals(passwordRepeat)) {
+            try {
+                password = PasswordHashing.toHexString(PasswordHashing.getSHA(password));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             RegisterServiceImpl registerService = new RegisterServiceImpl();
-            String message = registerService.doRegisterSupplier(name, password, email, phoneNumber);
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/homePageSupplier.jsp").forward(req, resp);
+            String message = registerService.doRegisterRetailer(name, password, email, phoneNumber);
+            req.setAttribute("name", message);
+            session.setAttribute("retailerName", name);
+            session.setAttribute("retailerId", "karatas");
+            req.setAttribute("status", "Başarılı");
+            req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         } else {
             String message = "Password not the same";
+            req.setAttribute("status", "Giriş Işlemi Başarısız");
             req.setAttribute("message", message);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/registerSupplier.jsp").forward(req, resp);
+        req.getRequestDispatcher("/registerRetailer.jsp").forward(req, resp);
     }
 }

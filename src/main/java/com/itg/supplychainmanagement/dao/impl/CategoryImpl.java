@@ -15,7 +15,7 @@ public class CategoryImpl implements CategoryDao {
     public void addCategory(String name) {
         Connection connection = DBUtil.connection();
         Category category = new Category(name);
-        try{
+        try {
             String saveProduct = "Insert into category (name) values (?)";
             PreparedStatement preStatement = connection.prepareStatement(saveProduct);
             preStatement.setString(1, category.getName());
@@ -29,11 +29,11 @@ public class CategoryImpl implements CategoryDao {
     @Override
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
-        try{
+        try {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("Select * from category");
             ResultSet rs = preStatement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 categories.add(new Category(id, name));
@@ -44,4 +44,23 @@ public class CategoryImpl implements CategoryDao {
         }
         return categories;
     }
+
+    @Override
+    public Category getCategoryId(int categoryId) {
+        Category category = new Category();
+        category.setId(categoryId);
+        try {
+            Connection connection = DBUtil.connection();
+            PreparedStatement preStatement = connection.prepareStatement("Select * from category where id = ?");
+            preStatement.setInt(1, category.getId());
+            ResultSet rs = preStatement.executeQuery();
+            while (rs.next()) {
+                category.setName(rs.getString("name"));
+            }
+            DBUtil.close(connection, preStatement, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return category;
+}
 }

@@ -11,7 +11,7 @@
     String auth = (String) session.getAttribute("auth");
     String retailerId = (String) session.getAttribute("retailerId");
     String supplierId = (String) session.getAttribute("supplierId");
-    if(session.getAttribute("retailerId") == null){
+    if (session.getAttribute("retailerId") == null) {
         response.sendRedirect("loginRetailer.jsp");
     }
 %>
@@ -35,25 +35,32 @@
             <button type="submit" class="btn btn-primary" id="btn-submit-stock">Stokta Bulunmayan Ürünler</button>
         </form>
     </div>
+</form>
 <div class="container">
     <div class="card-header my-3">Ürünler</div>
     <div class="row">
-    <c:forEach items="${productList}" var="productList">
-        <div class="col-md-3 my-3">
-            <div class="card w-100" style="width: 18rem;">
-                <img class="card-img-top" src="${productList.path}" alt="#" style="width: 150px; height: 150px">
-                <div class="card-body">
-                    <h5 class="card-title">${productList.name}</h5>
-                    <h6 class="price">${productList.price}</h6>
-                    <h6 class="category">${productList.quantity}</h6>
-                    <div class="mt-3 d-flex justify-content-between">
-                        <a href="addToCart?id=${productList.productId}&price=${productList.price}&name=${productList.name}" class="btn btn-dark">Add to Cart</a>
-                        <a class="btn btn-primary" href="detailProduct?id=${productList.productId}&price=${productList.price}&name=${productList.name}">Ürün Detayları</a>
+        <c:forEach items="${productList}" var="productList">
+            <div class="col-md-3 my-3">
+                <div class="card w-100" style="width: 18rem;">
+                    <c:forEach items="${productList.productImageList}" var="productImage">
+                        <img class="card-img-top" src="${productImage.path}" alt="#"
+                             style="width: 150px; height: 150px">
+                    </c:forEach>
+                    <div class="card-body">
+                        <h5 class="card-title">${productList.name}</h5>
+                        <h6 class="price">${productList.price}</h6>
+                        <h6 class="category">${productList.quantity}</h6>
+                        <h6 class="category">${productList.categoryname}</h6>
+                        <div class="mt-3 d-flex justify-content-between">
+                            <a href="addToCart?id=${productList.productId}" class="btn btn-dark">Add to Cart</a>
+                            <a class="btn btn-primary"
+                               href="detailProduct?id=${productList.productId}&price=${productList.price}&name=${productList.name}">Ürün
+                                Detayları</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </c:forEach>
+        </c:forEach>
     </div>
 </div>
 <%@include file="includes/footer.jsp" %>

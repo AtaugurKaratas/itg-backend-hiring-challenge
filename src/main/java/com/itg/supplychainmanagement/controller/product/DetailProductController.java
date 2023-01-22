@@ -1,5 +1,6 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.product;
 
+import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.model.ProductImage;
 import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
 
@@ -17,19 +18,13 @@ public class DetailProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF8");
-        ArrayList<ProductImage> imageList;
+        ArrayList<ProductImage> imageList = new ArrayList<>();
         int productId = Integer.parseInt(req.getParameter("id"));
-        double price = Double.parseDouble(req.getParameter("price"));
-        String name = req.getParameter("name");
         ProductServiceImpl productService = new ProductServiceImpl();
-        imageList = (ArrayList<ProductImage>) productService.getProductImages(productId);
-        req.setAttribute("imageList", imageList);
+        ProductDTO productDTO = productService.getProductById(productId);
+        productDTO.getProductImageList().forEach(x -> imageList.add(x));
 
-
-        HttpSession session = req.getSession();
-        session.setAttribute("productId", productId);
-        session.setAttribute("productPrice", price);
-        session.setAttribute("productName", name);
+        req.setAttribute("productDTO", productDTO);
 
         req.getRequestDispatcher("/productDetail.jsp").forward(req, resp);
     }

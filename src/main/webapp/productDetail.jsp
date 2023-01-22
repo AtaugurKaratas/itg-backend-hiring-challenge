@@ -16,9 +16,6 @@
         response.sendRedirect("loginRetailer.jsp");
     }
      */
-    int productId = (Integer) session.getAttribute("productId");
-    double productPrice = (Double) session.getAttribute("productPrice");
-    String productName = String.valueOf(session.getAttribute("productName"));
 %>
 <c:set var="count" value="${0}"/>
 <html>
@@ -35,11 +32,11 @@
 <%@include file="includes/navbar.jsp" %>
 <div class="carousel slide w-25 h-25 mx-auto my-5">
     <div class="text-center mt-2">
-        <h5 class="card-title">${productName}</h5>
+        <h5 class="card-title">${productDTO.name}</h5>
     </div>
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <c:forEach items="${imageList}" var="imageList">
+            <c:forEach items="${productDTO.productImageList}" var="imageList">
                 <c:if test="${count > 0}">
                     <div class="carousel-item">
                         <img src="${imageList.path}" class="d-block" alt="..." style="height: 500px; width: 500px;">
@@ -65,8 +62,8 @@
         </button>
     </div>
     <div class="text-center mt-2">
-        <h6 class="card-title">Fiyat: ${productPrice} TL</h6>
-        <a href="addToCart?id=${productId}&price=${productPrice}&name=${productName}" class="btn btn-primary" id="btn-submit">Sepete Ekle</a>
+        <h6 class="card-title">Fiyat: ${productDTO.price} TL</h6>
+        <a href="addToCart?id=${productDTO.productId}" class="btn btn-primary" id="btn-submit">Sepete Ekle</a>
     </div>
 </div>
 <%@include file="includes/footer.jsp" %>

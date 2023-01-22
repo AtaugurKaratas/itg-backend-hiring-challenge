@@ -41,7 +41,10 @@
             <c:forEach items="${productList}" var="productList">
                 <div class="col-md-3 my-3">
                     <div class="card w-100" style="width: 18rem;">
-                        <img class="card-img-top" src="${productList.path}" alt="#" style="width: 150px; height: 150px">
+                        <c:forEach items="${productList.productImageList}" var="productImage">
+                            <img class="card-img-top" src="${productImage.path}" alt="#"
+                                 style="width: 150px; height: 150px">
+                        </c:forEach>
                         <div class="card-body">
                             <h5 class="card-title">${productList.name}</h5>
                             <h6 class="price">${productList.price}</h6>

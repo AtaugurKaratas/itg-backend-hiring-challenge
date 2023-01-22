@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.product;
 
 import com.itg.supplychainmanagement.model.ProductImage;
 import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;

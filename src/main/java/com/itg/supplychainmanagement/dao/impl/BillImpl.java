@@ -2,50 +2,56 @@ package com.itg.supplychainmanagement.dao.impl;
 
 import com.itg.supplychainmanagement.dao.BillDao;
 import com.itg.supplychainmanagement.dto.BillDTO;
+import com.itg.supplychainmanagement.dto.CartDTO;
 import com.itg.supplychainmanagement.model.Bill;
-import com.itg.supplychainmanagement.model.Cart;
+import com.itg.supplychainmanagement.model.Retailer;
 import com.itg.supplychainmanagement.util.DBUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class BillImpl implements BillDao {
     @Override
-    public void addToBill(List<Cart> carts, int retailerId) {
-        int billId = 0;
+    public void addToBill(List<CartDTO> carts, int retailerId) {
         double totalPrice = 0;
-        for (Cart c : carts) {
+        for (CartDTO c : carts) {
             totalPrice += c.getPrice() * c.getQuantity();
         }
         try {
             Connection connection = DBUtil.connection();
-            String saveBill = "Insert into bill (totalprice, creationdate, ischeck, retailerid, approvaldate) values (?, ?, ?, ?, ?)";
-            Bill bill = new Bill(totalPrice, retailerId);
+            String saveBill = "Insert into bill (totalprice, creationdate, ischeck, retailerid, approvaldate, creationtime, approvaltime) values (?, ?, ?, ?, ?, ?, ?)";
+            Retailer retailer = new Retailer();
+            retailer.setId(retailerId);
+            Bill bill = new Bill(totalPrice, retailer);
             PreparedStatement preStatement = connection.prepareStatement(saveBill, Statement.RETURN_GENERATED_KEYS);
             preStatement.setDouble(1, bill.getTotalPrice());
             preStatement.setDate(2, bill.getCreationDate());
             preStatement.setBoolean(3, bill.isCheck());
-            preStatement.setInt(4, retailerId);
+            preStatement.setInt(4, bill.getRetailer().getId());
             preStatement.setDate(5, bill.getApprovalDate());
-            billId = preStatement.executeUpdate();
+            preStatement.setTime(6, bill.getCreationTime());
+            preStatement.setTime(7, bill.getApprovalTime());
+            bill.setId(preStatement.executeUpdate());
             ResultSet generatedKeys = preStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                billId = generatedKeys.getInt("id");
+                bill.setId(generatedKeys.getInt("id"));
             }
-            String saveCart = "Insert into cart (productname, quantity, price, ischeck, productid, billid) values (?, ?, ?, ?, ?, ?)";
-            for (Cart c : carts) {
+            String saveCart = "Insert into cart (quantity, price, ischeck, productid, billid) values (?, ?, ?, ?, ?)";
+            for (CartDTO c : carts) {
                 preStatement = connection.prepareStatement(saveCart);
-                preStatement.setString(1, c.getName());
-                preStatement.setInt(2, c.getQuantity());
-                preStatement.setDouble(3, c.getPrice());
-                preStatement.setBoolean(4, c.isCheck());
-                preStatement.setInt(5, c.getProductId());
-                preStatement.setInt(6, billId);
+                preStatement.setInt(1, c.getQuantity());
+                preStatement.setDouble(2, c.getPrice());
+                preStatement.setBoolean(3, c.isCheck());
+                preStatement.setInt(4, c.getProductId());
+                preStatement.setInt(5, bill.getId());
                 preStatement.executeUpdate();
             }
-            DBUtil.close(connection, preStatement, generatedKeys);
+            DBUtil.close(connection, preStatement, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,17 +84,17 @@ public class BillImpl implements BillDao {
     }
 
     @Override
-    public ArrayList<Cart> getAllCartById(int billId) {
-        ArrayList<Cart> cartList = new ArrayList<>();
-        try{
+    public ArrayList<CartDTO> getAllCartById(int billId) {
+        ArrayList<CartDTO> cartList = new ArrayList<>();
+        try {
             Connection connection = DBUtil.connection();
-            PreparedStatement preStatement = connection.prepareStatement("Select * from cart where billId = ?");
+            PreparedStatement preStatement = connection.prepareStatement("Select * from cart inner join product on cart.productid=product.id where billId = ?");
             preStatement.setInt(1, billId);
             ResultSet rs = preStatement.executeQuery();
-            while (rs.next()){
-                Cart cart = new Cart();
+            while (rs.next()) {
+                CartDTO cart = new CartDTO();
                 cart.setId(rs.getInt("id"));
-                cart.setName(rs.getString("productname"));
+                cart.setProductname(rs.getString("name"));
                 cart.setQuantity(rs.getInt("quantity"));
                 cart.setPrice(rs.getDouble("price"));
                 cart.setCheck(rs.getBoolean("ischeck"));
@@ -105,7 +111,7 @@ public class BillImpl implements BillDao {
 
     @Override
     public void checkBill(int billId) {
-        try{
+        try {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("Update bill set ischeck = ?, approvaldate = ? where id = ?");
             preStatement.setBoolean(1, true);
@@ -119,15 +125,15 @@ public class BillImpl implements BillDao {
     }
 
     @Override
-    public ArrayList<Bill> getAllBillRetailer(int retailerId) {
-        ArrayList<Bill> billArrayList = new ArrayList<>();
-        try{
+    public ArrayList<BillDTO> getAllBillRetailer(int retailerId) {
+        ArrayList<BillDTO> billArrayList = new ArrayList<>();
+        try {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("Select * from bill where retailerid = ?");
             preStatement.setInt(1, retailerId);
             ResultSet rs = preStatement.executeQuery();
-            while (rs.next()){
-                Bill bill = new Bill();
+            while (rs.next()) {
+                BillDTO bill = new BillDTO();
                 bill.setId(rs.getInt("id"));
                 bill.setTotalPrice(rs.getDouble("totalprice"));
                 bill.setCreationDate(rs.getDate("creationdate"));
@@ -145,7 +151,7 @@ public class BillImpl implements BillDao {
 
     @Override
     public void deleteBillById(int billId) {
-        try{
+        try {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("delete from bill where id = ?");
             preStatement.setInt(1, billId);
@@ -155,7 +161,7 @@ public class BillImpl implements BillDao {
             e.printStackTrace();
         }
 
-        try{
+        try {
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("delete from cart where billid = ?");
             preStatement.setInt(1, billId);

@@ -1,7 +1,10 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.bill;
 
+import com.itg.supplychainmanagement.dto.CartDTO;
+import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.service.impl.BillServiceImpl;
+import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,45 +23,41 @@ public class AddToCartController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF8");
 
-        try(PrintWriter out = resp.getWriter()){
-            ArrayList<Cart> cartList = new ArrayList<>();
+        try (PrintWriter out = resp.getWriter()) {
+            ArrayList<CartDTO> cartList = new ArrayList<>();
 
             int productId = Integer.parseInt(req.getParameter("id"));
-            double price = Double.parseDouble(req.getParameter("price"));
-            String productName = req.getParameter("name");
-            Cart cart = new Cart(1, price, productId);
-            cart.setName(productName);
+            ProductServiceImpl productService = new ProductServiceImpl();
+            ProductDTO productDTO = productService.getProductById(productId);
+            CartDTO cartDTO = new CartDTO(productDTO.getName(), 1, productDTO.getPrice(), false, productDTO.getProductId());
 
             HttpSession session = req.getSession();
-            ArrayList<Cart> cartArrayList =  (ArrayList<Cart>) session.getAttribute("cartList");
-            if(cartArrayList == null){
-                cartList.add(cart);
+            ArrayList<CartDTO> cartArrayList = (ArrayList<CartDTO>) session.getAttribute("cartList");
+            if (cartArrayList == null) {
+                cartList.add(cartDTO);
                 session.setAttribute("cartList", cartList);
-                out.println("session created and added the list");
-            } else{
+            } else {
                 cartList = cartArrayList;
                 session.setAttribute("cartList", cartList);
-                out.println("session is not empty");
                 boolean isHas = true;
-                for(Cart c: cartList){
-                    if(c.getProductId() == productId) {
+                for (CartDTO c : cartList) {
+                    if (c.getProductId() == productId) {
                         c.setQuantity((c.getQuantity() + 1));
                         isHas = false;
                         session.setAttribute("cartList", cartList);
                     }
                 }
-                if(isHas){
-                    cartList.add(cart);
+                if (isHas) {
+                    cartList.add(cartDTO);
                     session.setAttribute("cartList", cartList);
                 }
             }
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        ArrayList<Cart> cartArrayList =  (ArrayList<Cart>) session.getAttribute("cartList");
+        ArrayList<CartDTO> cartArrayList =  (ArrayList<CartDTO>) session.getAttribute("cartList");
         req.setAttribute("cartList", cartArrayList);
         int retailerId = Integer.parseInt((String)session.getAttribute("retailerId"));
         BillServiceImpl billService = new BillServiceImpl();

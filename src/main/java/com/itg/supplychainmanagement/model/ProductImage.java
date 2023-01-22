@@ -3,7 +3,6 @@ package com.itg.supplychainmanagement.model;
 public class ProductImage {
     private int id;
     private String path;
-
     private int productId;
 
     public ProductImage(){}
@@ -30,11 +29,11 @@ public class ProductImage {
         this.path = path;
     }
 
-    public int getProduct() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProduct(int productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 }

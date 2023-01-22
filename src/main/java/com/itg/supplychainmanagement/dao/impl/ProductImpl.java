@@ -2,12 +2,11 @@ package com.itg.supplychainmanagement.dao.impl;
 
 import com.itg.supplychainmanagement.dao.ProductDao;
 import com.itg.supplychainmanagement.dto.ProductDTO;
-import com.itg.supplychainmanagement.model.Cart;
-import com.itg.supplychainmanagement.model.Product;
-import com.itg.supplychainmanagement.model.ProductImage;
+import com.itg.supplychainmanagement.model.*;
 import com.itg.supplychainmanagement.util.DBUtil;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -15,23 +14,31 @@ import java.util.*;
 
 public class ProductImpl implements ProductDao {
     @Override
-    public int addProduct(String name, float price, int retailerId) {
+    public int addProduct(String name, float price, int retailerId, int categoryId) {
         int productId = 0;
         try{
             Connection connection = DBUtil.connection();
-            String saveProduct = "Insert into product (name, quantity, price, discount, retailerid) values (?, ?, ?, ?, ?)";
+            Retailer retailer = new Retailer();
+            Category category = new Category();
+            Product product = new Product(name, price, retailer, category);
+            product.getRetailer().setId(retailerId);
+            product.getCategory().setId(categoryId);
+            String saveProduct = "Insert into product (name, quantity, price, discount, retailerid, categoryId, creationdate, creationtime) values (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preStatement = connection.prepareStatement(saveProduct, Statement.RETURN_GENERATED_KEYS);
-            preStatement.setString(1, name);
-            preStatement.setInt(2, 0);
-            preStatement.setFloat(3, price);
-            preStatement.setInt(4, 0);
-            preStatement.setInt(5, retailerId);
+            preStatement.setString(1, product.getName());
+            preStatement.setInt(2, product.getQuantity());
+            preStatement.setFloat(3, product.getPrice());
+            preStatement.setInt(4, product.getDiscount());
+            preStatement.setInt(5, product.getCategory().getId());
+            preStatement.setInt(6, product.getRetailer().getId());
+            preStatement.setDate(7, (Date) product.getCreationDate());
+            preStatement.setTime(8, product.getCreationTime());
             productId = preStatement.executeUpdate();
             ResultSet generatedKeys = preStatement.getGeneratedKeys();
             if(generatedKeys.next()){
                 productId = generatedKeys.getInt("id");
             }
-            DBUtil.close(connection, preStatement, null);
+            DBUtil.close(connection, preStatement, generatedKeys);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +66,8 @@ public class ProductImpl implements ProductDao {
         try{
             Connection connection = DBUtil.connection();
             PreparedStatement preStatement = connection.prepareStatement("Select product.id, product.name, product.quantity, " +
-                    "product.price, product.discount, product.retailerid, productimage.path from product inner join productimage on product.id=productimage.productid where name like ?");
+                    "product.price, product.discount, product.retailerid, productimage.path, category.name as \"categoryname\" from product inner join productimage on product.id=productimage.productid " +
+                    "inner join category on product.categoryid=category.id where product.name like ?");
             preStatement.setString(1, (name + "%"));
             ResultSet rs = preStatement.executeQuery();
             Set<Integer> set = new HashSet<>();
@@ -71,7 +79,12 @@ public class ProductImpl implements ProductDao {
                 productDTO.setPrice(rs.getFloat("price"));
                 productDTO.setDiscount(rs.getInt("discount"));
                 productDTO.setRetailerId(rs.getInt("retailerId"));
-                productDTO.setPath(rs.getString("path"));
+                List<ProductImage> productImageList = new ArrayList<>();
+                ProductImage productImage = new ProductImage();
+                productImage.setPath(rs.getString("path"));
+                productImageList.add(productImage);
+                productDTO.setProductImageList(productImageList);
+                productDTO.setCategoryname(rs.getString("categoryname"));
                 if(!set.contains(productDTO.getProductId()))
                     productList.add(productDTO);
                 set.add(productDTO.getProductId());
@@ -106,7 +119,11 @@ public class ProductImpl implements ProductDao {
                 productDTO.setPrice(rs.getFloat("price"));
                 productDTO.setDiscount(rs.getInt("discount"));
                 productDTO.setRetailerId(rs.getInt("retailerId"));
-                productDTO.setPath(rs.getString("path"));
+                List<ProductImage> productImageList = new ArrayList<>();
+                ProductImage productImage = new ProductImage();
+                productImage.setPath(rs.getString("path"));
+                productImageList.add(productImage);
+                productDTO.setProductImageList(productImageList);
                 if(!set.contains(productDTO.getProductId()))
                     productList.add(productDTO);
                 set.add(productDTO.getProductId());
@@ -123,14 +140,14 @@ public class ProductImpl implements ProductDao {
         List<ProductImage> productImageList = new ArrayList<>();
         try{
             Connection connection = DBUtil.connection();
-            PreparedStatement preStatement = connection.prepareStatement("Select * from productimage where productid = ?");
+            PreparedStatement preStatement = connection.prepareStatement("Select * from productimage inner join product on productimage.productid=product.id where productid = ?");
             preStatement.setInt(1, productId);
             ResultSet rs = preStatement.executeQuery();
             while (rs.next()){
                 ProductImage productImage = new ProductImage();
                 productImage.setId(rs.getInt("id"));
                 productImage.setPath(rs.getString("path"));
-                productImage.setProduct(rs.getInt("productid"));
+                productImage.setProductId(rs.getInt("productid"));
                 productImageList.add(productImage);
             }
             DBUtil.close(connection, preStatement, rs);
@@ -153,6 +170,33 @@ public class ProductImpl implements ProductDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ProductDTO getProductById(int productId) {
+        ProductDTO product = new ProductDTO();
+        CategoryImpl categoryImpl = new CategoryImpl();
+        try{
+            Connection connection = DBUtil.connection();
+            PreparedStatement preStatement = connection.prepareStatement("Select * from product where id = ?");
+            preStatement.setInt(1, productId);
+            ResultSet rs = preStatement.executeQuery();
+            while (rs.next()){
+                product.setProductId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setPrice(rs.getFloat("price"));
+                product.setDiscount(rs.getInt("discount"));
+                product.setRetailerId(rs.getInt("retailerid"));
+                product.setProductImageList(getProductImages(productId));
+                Category category = categoryImpl.getCategoryId(rs.getInt("categoryid"));
+                product.setCategoryname(category.getName());
+            }
+            DBUtil.close(connection, preStatement, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 
 

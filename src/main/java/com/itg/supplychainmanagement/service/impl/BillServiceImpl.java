@@ -2,6 +2,7 @@ package com.itg.supplychainmanagement.service.impl;
 
 import com.itg.supplychainmanagement.dao.impl.BillImpl;
 import com.itg.supplychainmanagement.dto.BillDTO;
+import com.itg.supplychainmanagement.dto.CartDTO;
 import com.itg.supplychainmanagement.model.Bill;
 import com.itg.supplychainmanagement.model.Cart;
 import com.itg.supplychainmanagement.service.BillService;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class BillServiceImpl implements BillService {
     @Override
-    public void addToBill(List<Cart> cartList, int retailerId) {
+    public void addToBill(List<CartDTO> cartList, int retailerId) {
         BillImpl bill = new BillImpl();
         bill.addToBill(cartList, retailerId);
     }
@@ -23,7 +24,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public ArrayList<Cart> getAllCartById(int billId) {
+    public ArrayList<CartDTO> getAllCartById(int billId) {
         BillImpl bill = new BillImpl();
         return bill.getAllCartById(billId);
     }
@@ -35,7 +36,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public ArrayList<Bill> getAllBillRetailer(int retailerId) {
+    public ArrayList<BillDTO> getAllBillRetailer(int retailerId) {
         BillImpl bill = new BillImpl();
         return bill.getAllBillRetailer(retailerId);
     }

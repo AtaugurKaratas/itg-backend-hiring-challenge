@@ -39,7 +39,7 @@
       <tbody>
       <c:forEach items="${cartList}" var="cartList">
         <tr>
-          <td>${cartList.name}</td>
+          <td>${cartList.productname}</td>
           <td id="price">${cartList.price} TL</td>
           <td>
             <form action="" method="POST" class="form-inline">

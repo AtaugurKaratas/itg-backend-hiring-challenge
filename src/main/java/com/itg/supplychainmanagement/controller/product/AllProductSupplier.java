@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.product;
 
 import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
@@ -11,14 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@WebServlet(name = "all-product-supplier", value = "/all-product-supplier")
+public class AllProductSupplier extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/allProductSupplier.jsp").forward(req, resp);
+    }
 
-@WebServlet(name = "out-of-stock", value = "/out-of-stock")
-public class OutOfStockController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
         ProductServiceImpl productService = new ProductServiceImpl();
-        List<ProductDTO> productList = productService.outOfStockProduct();
+        List<ProductDTO> productList = productService.searchProduct(name);
         req.setAttribute("productList", productList);
-        req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
+        req.getRequestDispatcher("/allProductSupplier.jsp").forward(req, resp);
+
     }
 }

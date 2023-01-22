@@ -39,7 +39,7 @@
         <tbody>
         <c:forEach items="${cartListById}" var="cartListById">
             <tr>
-                <td>${cartListById.name}</td>
+                <td>${cartListById.productname}</td>
                 <td>${cartListById.quantity}</td>
                 <td>${cartListById.price} TL</td>
             </tr>

@@ -1,6 +1,7 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.bill;
 
-import com.itg.supplychainmanagement.model.Cart;
+import com.itg.supplychainmanagement.dto.BillDTO;
+import com.itg.supplychainmanagement.model.Bill;
 import com.itg.supplychainmanagement.service.impl.BillServiceImpl;
 
 import javax.servlet.ServletException;
@@ -12,24 +13,24 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "detailBill", value = "/detailBill")
-public class BillDetailController extends HttpServlet {
+
+@WebServlet(name = "bill-retailer", value = "/bill-retailer")
+public class BillRetailerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF8");
-        ArrayList<Cart> cartList;
-        int billId = Integer.parseInt(req.getParameter("id"));
+        ArrayList<BillDTO> billListRetailer;
         HttpSession session = req.getSession();
-        session.setAttribute("billId", billId);
+        int retailerId = Integer.parseInt((String) session.getAttribute("retailerId"));
         BillServiceImpl billService = new BillServiceImpl();
-        cartList = billService.getAllCartById(billId);
-        req.setAttribute("cartListById", cartList);
-        req.getRequestDispatcher("/detailBill.jsp").forward(req, resp);
+        billListRetailer = billService.getAllBillRetailer(retailerId);
+        req.setAttribute("billListRetailer", billListRetailer);
+        req.getRequestDispatcher("/billRetailer.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        super.doPost(req, resp);
     }
 }

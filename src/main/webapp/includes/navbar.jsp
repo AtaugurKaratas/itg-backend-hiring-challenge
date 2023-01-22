@@ -25,7 +25,7 @@
                 <li class="nav-item active"><a class="nav-link" href="supplier-login">Tedarikci Giris</a></li>
                 <% } if (retailerId != null){ %>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/homePageRetailer.jsp">Urun Arama</a></li>
-                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/addProduct.jsp">Urun Ekle</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/add-product">Urun Ekle</a></li>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/cart.jsp">Sepet <span class="btn-danger">${cartList.size()}</span></a></li>
                 <li class="nav-item active"><a class="nav-link" href="/supply-chain-management-1.0-SNAPSHOT/bill-retailer">Bekleyen Islemler</a></li>
                 <% } %>

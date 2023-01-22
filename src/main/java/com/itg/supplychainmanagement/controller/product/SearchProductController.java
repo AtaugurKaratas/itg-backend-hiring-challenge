@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.product;
 
 import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.service.impl.ProductServiceImpl;
@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "all-product-supplier", value = "/all-product-supplier")
-public class AllProductSupplier extends HttpServlet {
+@WebServlet(name = "search-product", value = "/search-product")
+public class SearchProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/allProductSupplier.jsp").forward(req, resp);
+        req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AllProductSupplier extends HttpServlet {
         ProductServiceImpl productService = new ProductServiceImpl();
         List<ProductDTO> productList = productService.searchProduct(name);
         req.setAttribute("productList", productList);
-        req.getRequestDispatcher("/allProductSupplier.jsp").forward(req, resp);
+        req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
 
     }
 }

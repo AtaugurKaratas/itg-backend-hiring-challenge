@@ -5,4 +5,6 @@ public interface RetailerDao {
     int register(Retailer retailer);
 
     String validate(String email, String password);
+
+    Retailer getRetailerById(int retailerId);
 }

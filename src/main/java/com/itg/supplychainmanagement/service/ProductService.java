@@ -2,6 +2,7 @@ package com.itg.supplychainmanagement.service;
 
 import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.model.Cart;
+import com.itg.supplychainmanagement.model.Category;
 import com.itg.supplychainmanagement.model.Product;
 import com.itg.supplychainmanagement.model.ProductImage;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    int addProduct(String name, float price, int retailerId);
+    int addProduct(String name, float price, int retailerId, int categoryId);
 
     void addProductImage(String path, int productId);
 
@@ -22,4 +23,9 @@ public interface ProductService {
     List<ProductImage> getProductImages(int productId);
 
     void updateProduct(int id, int quantity, int discount);
+
+    List<Category> selectCategory();
+
+    ProductDTO getProductById(int productId);
+
 }

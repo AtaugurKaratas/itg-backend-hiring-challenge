@@ -1,4 +1,4 @@
-package com.itg.supplychainmanagement.controller;
+package com.itg.supplychainmanagement.controller.user;
 
 import com.itg.supplychainmanagement.service.impl.LoginServiceImpl;
 import com.itg.supplychainmanagement.util.PasswordHashing;
@@ -12,11 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-@WebServlet(name = "supplier-login", value = "/supplier-login")
-public class LoginSupplierController extends HttpServlet {
+@WebServlet(name = "retailer-login", value = "/retailer-login")
+public class LoginRetailerController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/billDetail").forward(req, resp);
+        req.getRequestDispatcher("/loginRetailer.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,15 +33,15 @@ public class LoginSupplierController extends HttpServlet {
         }
 
         LoginServiceImpl loginService = new LoginServiceImpl();
-        String supplierId = loginService.loginSupplier(email, password);
-        if(supplierId != null) {
-            session.setAttribute("supplierId", supplierId);
+        String retailerId = loginService.loginRegister(email, password);
+        if(retailerId != null) {
+            session.setAttribute("retailerId", retailerId);
             session.setAttribute("auth", "Auth");
-            req.setAttribute("status", "success");
-            req.getRequestDispatcher("/homePageSupplier.jsp").forward(req, resp);
+            req.setAttribute("status", "Başarılı");
+            req.getRequestDispatcher("/homePageRetailer.jsp").forward(req, resp);
         } else {
-            req.setAttribute("status", "failed");
-            req.getRequestDispatcher("/loginSupplier.jsp").forward(req, resp);
+            req.setAttribute("status", "Giriş Işlemi Başarısız");
+            req.getRequestDispatcher("/loginRetailer.jsp").forward(req, resp);
         }
     }
 }

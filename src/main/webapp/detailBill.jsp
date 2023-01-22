@@ -40,9 +40,9 @@
         <tbody>
         <c:forEach items="${cartListById}" var="cartListById">
             <tr>
-                <td>${cartListById.name}</td>
-                <td>${cartListById.quantity} TL</td>
-                <td>${cartListById.price}</td>
+                <td>${cartListById.productname}</td>
+                <td>${cartListById.quantity}</td>
+                <td>${cartListById.price} TL</td>
                 <td>
                     <form action="" method="POST" style="display: inline">
                         <button type="submit" class="btn btn-warning" id="btn-check">Işlemi Onayla</button>

@@ -3,6 +3,7 @@ package com.itg.supplychainmanagement.service.impl;
 import com.itg.supplychainmanagement.dao.impl.ProductImpl;
 import com.itg.supplychainmanagement.dto.ProductDTO;
 import com.itg.supplychainmanagement.model.Cart;
+import com.itg.supplychainmanagement.model.Category;
 import com.itg.supplychainmanagement.model.Product;
 import com.itg.supplychainmanagement.model.ProductImage;
 import com.itg.supplychainmanagement.service.ProductService;
@@ -13,8 +14,8 @@ public class ProductServiceImpl implements ProductService {
 
     ProductImpl product = new ProductImpl();
     @Override
-    public int addProduct(String name, float price, int retailerId) {
-        return product.addProduct(name, price, retailerId);
+    public int addProduct(String name, float price, int retailerId, int categoryId) {
+        return product.addProduct(name, price, retailerId, categoryId);
     }
 
     @Override
@@ -49,6 +50,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProduct(int id, int quantity, int discount) {
         product.updateProduct(id, quantity, discount);
+    }
+
+    @Override
+    public List<Category> selectCategory() {
+        CategoryServiceImpl categoryService = new CategoryServiceImpl();
+        return categoryService.getAllCategory();
+    }
+
+    @Override
+    public ProductDTO getProductById(int productId) {
+        ProductImpl product = new ProductImpl();
+        return product.getProductById(productId);
     }
 
 
